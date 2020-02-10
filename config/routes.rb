@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     collection do
       post :confirm
     end
-    patch 'confirm', to: :edit_confirm, on: :member, as: :confirm
+    patch 'confirm', to: 'posts#edit_confirm', on: :member
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
