@@ -1,9 +1,9 @@
 module PostsHelper
   def confirm_path
     case action_name
-    when 'new'
+    when 'new', 'confirm', 'create'
       confirm_posts_path
-    when 'edit'
+    when 'edit', 'edit_confirm', 'update'
       edit_confirm_post_path(params[:id])
     end
   end
