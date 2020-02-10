@@ -1,5 +1,5 @@
 <h1>Confirm Post</h1>
-<%= form_with model: @post, url: confirmed_path, local: true do |f| %>
+<%= form_with model: @post, url: confirmed_path, method: confirmed_method, local: true do |f| %>
   <div class='field'>
     <%= f.label :title %>
     <%= f.text_field :title, readonly: true %>

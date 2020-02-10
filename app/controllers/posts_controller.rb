@@ -38,17 +38,13 @@ class PostsController < ApplicationController
   end
 
   def confirm
-    @post = Post.new(post_params)
-    render :new if @post.invalid?
-  end
-
-  def edit_confirm
-    set_post
-    @post.assign_attributes(post_params)
-    if @post.valid?
-      render :confirm
+    if params[:id]
+      set_post
+      @post.assign_attributes(post_params)
+      render :edit if @post.invalid?
     else
-      render :edit
+      @post = Post.new(post_params)
+      render :new if @post.invalid?
     end
   end
 

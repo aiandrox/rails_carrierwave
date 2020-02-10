@@ -1,19 +1,25 @@
 module PostsHelper
   def confirm_path
-    case action_name
-    when 'new', 'confirm', 'create'
-      confirm_posts_path
-    when 'edit', 'edit_confirm', 'update'
+    if Post.exists?(@post.id)
       confirm_post_path(params[:id])
+    else
+      confirm_posts_path
     end
   end
 
   def confirmed_path
-    case action_name
-    when 'confirm'
-      posts_path
-    when 'edit_confirm'
+    if Post.exists?(@post.id)
       post_path(params[:id])
+    else
+      posts_path
+    end
+  end
+
+  def confirmed_method
+    if Post.exists?(@post.id)
+      'patch'
+    else
+      'post'
     end
   end
 end
