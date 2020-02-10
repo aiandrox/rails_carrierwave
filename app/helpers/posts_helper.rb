@@ -4,7 +4,7 @@ module PostsHelper
     when 'new', 'confirm', 'create'
       confirm_posts_path
     when 'edit', 'edit_confirm', 'update'
-      edit_confirm_post_path(params[:id])
+      confirm_post_path(params[:id])
     end
   end
 
