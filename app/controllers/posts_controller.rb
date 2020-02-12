@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_post, only: %i[show edit update destroy confirm]
   before_action :page_back, only: %i[create update], if: -> { params[:commit] == 'Back' }
 
   def index
@@ -39,7 +39,6 @@ class PostsController < ApplicationController
 
   def confirm
     if params[:id]
-      set_post
       @post.assign_attributes(post_params)
       render :edit if @post.invalid?
     else
