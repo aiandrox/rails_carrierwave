@@ -25,7 +25,9 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.update(post_params)
+    @post.assign_attributes(post_params)
+    @post.image.retrieve_from_cache! params[:post][:image_cache]
+    if @post.save
       redirect_to @post, notice: 'Post was successfully updated.'
     else
       render :edit
