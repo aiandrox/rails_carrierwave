@@ -1,6 +1,6 @@
 module PostsHelper
   def confirm_path
-    if Post.exists?(@post.id)
+    if @post.new_record?
       confirm_post_path(params[:id])
     else
       confirm_posts_path
@@ -8,7 +8,7 @@ module PostsHelper
   end
 
   def confirmed_path
-    if Post.exists?(@post.id)
+    if @post.new_record?
       post_path(params[:id])
     else
       posts_path
@@ -16,7 +16,7 @@ module PostsHelper
   end
 
   def confirmed_method
-    if Post.exists?(@post.id)
+    if @post.new_record?
       'patch'
     else
       'post'
