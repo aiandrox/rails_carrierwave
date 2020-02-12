@@ -6,7 +6,7 @@
   </div>
   <div class='field'>
     <%= f.label :image %>
-    <%= image_tag @post.image.url if @post.image.present? %>
+    <%= image_tag @post.image.url if @post.image? %>
     <%= f.hidden_field :image_cache, value: @post.image.cache_name %>
   </div>
   <div class='actions'>
