@@ -4,6 +4,10 @@
     <%= f.label :title %>
     <%= f.text_field :title, readonly: true %>
   </div>
+  <div class='field'>
+    <%= f.label :image %>
+    <%= image_tag @post.image.url %>
+  </div>
   <div class='actions'>
     <%= f.submit 'Submit' %>
     <%= f.submit 'Back' %>
