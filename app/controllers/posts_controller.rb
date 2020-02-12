@@ -16,7 +16,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-
+    @post.image.retrieve_from_cache! params[:post][:image_cache]
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
@@ -56,7 +56,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :image)
+    params.require(:post).permit(:title, :image, :image_cache)
   end
 
   def page_back
