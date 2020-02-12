@@ -38,10 +38,11 @@ class PostsController < ApplicationController
   end
 
   def confirm
-    if params[:id]
+    case params[:commit]
+    when 'Create Post'
       @post.assign_attributes(post_params)
       render :edit if @post.invalid?
-    else
+    when 'Update Post'
       @post = Post.new(post_params)
       render :new if @post.invalid?
     end
