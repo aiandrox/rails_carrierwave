@@ -26,7 +26,11 @@ class PostsController < ApplicationController
 
   def update
     @post.assign_attributes(post_params)
-    retrieve_image_from(@post.image_cache)
+    if @post.image_cache.present?
+      @post.image.cache_stored_file!
+      @post.image.retrieve_from_cache! @post.image_cache
+      @post.image.recreate_versions!
+    end
     if @post.save
       redirect_to @post, notice: 'Post was successfully updated.'
     else
