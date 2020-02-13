@@ -16,6 +16,11 @@
     <%= form.text_field :title %>
   </div>
 
+  <div class="field">
+    <%= form.label :images %>
+    <%= form.file_field :images, multiple: true, accept: 'image/jpg,image/png' %>
+  </div>
+
   <div class="actions">
     <%= form.submit %>
   </div>
