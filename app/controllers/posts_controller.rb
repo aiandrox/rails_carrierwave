@@ -52,7 +52,12 @@ class PostsController < ApplicationController
     when 'Update Post'
       set_post
       @post.assign_attributes(post_params)
-      image_confirm
+      if @post.image_cache.present?
+        @post.image.cache_stored_file!
+        @post.image.retrieve_from_cache! @post.image_cache
+        @post.image_cache = @post.image.cache_name
+        @post.image.recreate_versions!
+      end
       render :edit if @post.invalid?
     end
   end
