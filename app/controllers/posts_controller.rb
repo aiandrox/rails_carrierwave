@@ -16,7 +16,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    @post.image.retrieve_from_cache! params[:post][:image_cache]
+    retrieve_image_from(params[:post][:image_cache])
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
@@ -26,7 +26,7 @@ class PostsController < ApplicationController
 
   def update
     @post.assign_attributes(post_params)
-    @post.image.retrieve_from_cache! params[:post][:image_cache]
+    retrieve_image_from(params[:post][:image_cache])
     if @post.save
       redirect_to @post, notice: 'Post was successfully updated.'
     else
@@ -43,10 +43,12 @@ class PostsController < ApplicationController
     case params[:commit]
     when 'Create Post'
       @post = Post.new(post_params)
+      image_confirm
       render :new if @post.invalid?
     when 'Update Post'
       set_post
       @post.assign_attributes(post_params)
+      image_confirm
       render :edit if @post.invalid?
     end
   end
@@ -65,12 +67,21 @@ class PostsController < ApplicationController
     case action_name
     when 'create'
       @post = Post.new(post_params)
+      retrieve_image_from(@post.image_cache)
       render :new
     when 'update'
       @post.assign_attributes(post_params)
+      retrieve_image_from(@post.image_cache)
       render :edit
-    else
-      render status: 500
     end
+  end
+
+  def retrieve_image_from(cache)
+    @post.image.retrieve_from_cache! cache if cache.present? && @post.image.blank?
+  end
+
+  def image_confirm
+    retrieve_image_from(@post.image_cache) unless params[:post][:remove_image] == '1'
+    @post.image_cache = @post.image.cache_name
   end
 end
