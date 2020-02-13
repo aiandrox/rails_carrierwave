@@ -75,7 +75,7 @@ class PostsController < ApplicationController
       render :new
     when 'update'
       @post.assign_attributes(post_params)
-      retrieve_image_from
+      @post.image.retrieve_from_cache! @post.image_cache if @post.image_cache.present?
       render :edit
     end
   end
