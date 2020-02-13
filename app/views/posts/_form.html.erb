@@ -20,6 +20,13 @@
     <%= f.label :image %>
     <%= f.file_field :image %>
     <%= f.hidden_field :image_cache %>
+    <% if @post.image? %>
+      <div>
+        <%= image_tag @post.image_url %>
+        <%= f.check_box :remove_image %>
+        Remove image
+      </div>
+    <% end %>
   </div>
 
   <div class="actions">
