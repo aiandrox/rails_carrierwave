@@ -16,7 +16,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
-    retrieve_image_from(params[:post][:image_cache])
+    retrieve_image_from(@post.image_cache)
     if @post.save
       redirect_to @post, notice: 'Post was successfully created.'
     else
@@ -26,7 +26,7 @@ class PostsController < ApplicationController
 
   def update
     @post.assign_attributes(post_params)
-    retrieve_image_from(params[:post][:image_cache])
+    retrieve_image_from(@post.image_cache)
     if @post.save
       redirect_to @post, notice: 'Post was successfully updated.'
     else
