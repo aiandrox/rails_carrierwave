@@ -46,16 +46,13 @@ class PostsController < ApplicationController
     case params[:commit]
     when 'Create Post'
       @post = Post.new(post_params)
-      image_confirm
+      retrieve_image_from unless params[:post][:remove_image] == '1'
+      @post.image_cache = @post.image.cache_name
       render :new if @post.invalid?
     when 'Update Post'
       set_post
       @post.assign_attributes(post_params)
-      if @post.image_cache.present?
-        @post.image.cache_stored_file!
-        @post.image.retrieve_from_cache! @post.image_cache
-        @post.image_cache = @post.image.cache_name
-      end
+      @post.image_cache = @post.image.cache_name
       render :edit if @post.invalid?
     end
   end
@@ -85,10 +82,5 @@ class PostsController < ApplicationController
 
   def retrieve_image_from(cache = @post.image_cache)
     @post.image.retrieve_from_cache! cache if cache.present? && @post.image.blank?
-  end
-
-  def image_confirm
-    retrieve_image_from unless params[:post][:remove_image] == '1'
-    @post.image_cache = @post.image.cache_name
   end
 end
