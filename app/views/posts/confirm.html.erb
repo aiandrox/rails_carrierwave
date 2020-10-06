@@ -4,6 +4,11 @@
     <%= f.label :title %>
     <%= f.text_field :title, readonly: true %>
   </div>
+  <div class='field'>
+    <%= f.label :image %>
+    <div><%= image_tag @post.image.url if @post.image? %></div>
+    <%= f.hidden_field :image_cache, value: @post.image.cache_name %>
+  </div>
   <div class='actions'>
     <%= f.submit 'Submit' %>
     <%= f.submit 'Back' %>
